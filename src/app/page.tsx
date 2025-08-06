@@ -54,7 +54,7 @@ export default function Home() {
         </button>
       )}
       <div className={styles.pageContainer}>
-        <Image src={pageImage} alt={`Page ${page}`} width={1000} height={750} className={styles.pageImage} priority />
+        <Image src={pageImage} alt={`Page ${page}`} width={1080} height={750} className={styles.pageImage} priority />
       </div>
       {page < totalPages && (
         <button onClick={handleNext} className={`${styles.navButton} ${styles.right}`}>

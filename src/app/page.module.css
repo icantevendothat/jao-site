@@ -6,7 +6,7 @@
     height: 100%;
     background-color: red;
     opacity: 1;
-    transition: opacity 1s ease-out; /* Changed from 0.5s to 1s for slower fade */
+    transition: opacity 3s ease-out; /* Changed from 0.5s to 1s for slower fade */
     z-index: 1000;
 }
     
@@ -24,12 +24,12 @@
 .pageContainer {
     position: relative;
     max-width: 90%;
-    max-height: 90vh;
+    max-height: 100vh;
 }
 
 .pageImage {
-    width: auto;
-    height: auto;
+    width: 100vh;
+    height: 100vh;
     object-fit: contain;
 }
 
@@ -40,9 +40,10 @@
     /* Reset to native button appearance */
     background: ButtonFace; /* Native button background */
     border: 2px outset ButtonBorder; /* Native button border style */
-    padding: 8px 12px;
+    padding: 4px 12px;
+    color: black;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 10px;
     z-index: 10;
     border-radius: 0; /* Remove custom border radius */
     box-shadow: none; /* Remove custom shadow */
@@ -59,11 +60,11 @@
 }
 
 .left {
-    left: 20px;
+    left: 0px;
 }
 
 .right {
-    right: 20px;
+    right: 0px;
 }
 
 @media (orientation: portrait) {
