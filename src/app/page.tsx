@@ -7,17 +7,22 @@ import styles from './page.module.css';
 export default function Home() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false);
   const [isPortrait, setIsPortrait] = useState(false);
 
   useEffect(() => {
-    const handleLoad = () => setLoading(false);
+    const handleLoad = () => {
+      setFadeOut(true);
+      setTimeout(() => setLoading(false), 1000);
+    };
+    
     const timer = setTimeout(handleLoad, 1000); 
 
     const handleOrientationChange = () => {
       setIsPortrait(window.matchMedia("(orientation: portrait)").matches);
     };
 
-    handleOrientationChange(); // Initial check
+    handleOrientationChange(); 
     window.addEventListener('resize', handleOrientationChange);
 
     return () => {
@@ -27,6 +32,7 @@ export default function Home() {
   }, []);
 
   const totalPages = 16;
+  const navPages = [1, 8, 11, 13, 15]; 
 
   const handleNext = () => {
     if (page < totalPages) {
@@ -40,27 +46,46 @@ export default function Home() {
     }
   };
 
+  // Corrected function: 'pageNumber' is explicitly typed as a number
+  const jumpToPage = (pageNumber: number) => {
+    setPage(pageNumber);
+  };
+
   const pageImage = `/Page${page}.png`;
 
-  if (loading) {
-    return <div className={styles.loadingScreen}></div>;
-  }
-
   return (
-    <div className={styles.container}>
-      {page > 1 && (
-        <button onClick={handlePrevious} className={`${styles.navButton} ${styles.left}`}>
-          &lt;
-        </button>
+    <>
+      {loading && (
+        <div className={`${styles.loadingScreen} ${fadeOut ? styles.fadeOut : ''}`}></div>
       )}
-      <div className={styles.pageContainer}>
-        <Image src={pageImage} alt={`Page ${page}`} width={1080} height={750} className={styles.pageImage} priority />
-      </div>
-      {page < totalPages && (
-        <button onClick={handleNext} className={`${styles.navButton} ${styles.right}`}>
-          &gt;
-        </button>
+      {!isPortrait ? (
+        <div className={styles.container}>
+          {page > 1 && (
+            <button onClick={handlePrevious} className={`${styles.navButton} ${styles.left}`}>
+              &lt;
+            </button>
+          )}
+          <div className={styles.pageContainer}>
+            <Image src={pageImage} alt={`Page ${page}`} width={1200} height={750} className={styles.pageImage} priority />
+          </div>
+          {page < totalPages && (
+            <button onClick={handleNext} className={`${styles.navButton} ${styles.right}`}>
+              &gt;
+            </button>
+          )}
+          <div className={styles.navPanel}>
+            {navPages.map((pageNumber, index) => (
+              <div 
+                key={index} 
+                className={styles.navLink} 
+                onClick={() => jumpToPage(pageNumber)}>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className={styles.rotateMessage}>ROTATE SCREEN FOR BEST EXPERIENCE</div>
       )}
-    </div>
+    </>
   );
 }
