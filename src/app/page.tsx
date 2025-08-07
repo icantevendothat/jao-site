@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './page.module.css';
+import './globals.css';
 
 export default function Home() {
   const [page, setPage] = useState(1);
