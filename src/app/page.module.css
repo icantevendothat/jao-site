@@ -21,7 +21,7 @@ body::-webkit-scrollbar {
 .container {
     min-height: 100vh;
     display: flex;
-    justify-content: center; /* Centers the content block */
+    justify-content: center; 
     align-items: flex-start;
     padding-top: 5vh;
     width: auto;
@@ -31,7 +31,7 @@ body::-webkit-scrollbar {
     background-attachment: fixed;
     position: relative;
     scrollbar-width: none;
-    /* padding-right: 5vw; removed this line */
+    /* padding-right: 5vw; */
 }
 
 .container::-webkit-scrollbar {
@@ -58,7 +58,7 @@ body::-webkit-scrollbar {
     width: 10vw;
     position: absolute;
     right: 0;
-    margin-right: 11vw; /* Negative margin to create the overlap */
+    margin-right: 11vw; 
     background-image: url('/nav.png');
     background-size: contain;
     background-repeat: no-repeat;

@@ -46,7 +46,6 @@ export default function Home() {
     }
   };
 
-  // Corrected function: 'pageNumber' is explicitly typed as a number
   const jumpToPage = (pageNumber: number) => {
     setPage(pageNumber);
   };
