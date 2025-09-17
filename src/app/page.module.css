@@ -21,9 +21,6 @@
     align-items: flex-start;
     padding-top: 5vh;
     width: auto;
-    background-image: url('/BG.png');
-    background-size: cover;
-    background-position: center;
     background-attachment: fixed;
     position: relative;
     scrollbar-width: none;
