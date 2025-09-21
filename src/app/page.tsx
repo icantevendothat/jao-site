@@ -32,8 +32,10 @@ export default function Home() {
     };
   }, []);
 
-  const totalPages = 16;
-  const navPages = [1, 8, 11, 13, 15]; 
+  // Updated to 26 to match the new number of images
+  const totalPages = 26;
+  // Updated with more logical jump points for a 26-page book
+  const navPages = [1, 7, 13, 19, 26];
 
   const handleNext = () => {
     if (page < totalPages) {

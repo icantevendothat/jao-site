@@ -1,24 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #211206;
   }
 }
 
 body {
-  background: var(--foreground);
-  color: var(--background);
+  /* Updated background properties */
+  background: url('/BG.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
   font-family:'Times New Roman', Times, serif;
   scrollbar-width: none;
   -ms-overflow-style: none;
   overflow: hidden;
+  color: #1f0404;
 }
 
 body::-webkit-scrollbar {
