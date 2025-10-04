@@ -32,10 +32,8 @@ export default function Home() {
     };
   }, []);
 
-  // Updated to 26 to match the new number of images
-  const totalPages = 26;
-  // Updated with more logical jump points for a 26-page book
-  const navPages = [1, 7, 13, 19, 26];
+  const totalPages = 27; // Changed from 26 to 27
+  const navPages = [1, 7, 13, 19, 27]; // Updated last navigation page
 
   const handleNext = () => {
     if (page < totalPages) {
@@ -68,7 +66,15 @@ export default function Home() {
             </button>
           )}
           <div className={styles.pageContainer}>
-            <Image src={pageImage} alt={`Page ${page}`} width={1200} height={750} className={styles.pageImage} priority />
+            {/* The pageImage class in CSS will handle the uniform size and object-fit */}
+            <Image 
+              src={pageImage} 
+              alt={`Page ${page}`} 
+              width={1200} 
+              height={750} 
+              className={styles.pageImage} 
+              priority 
+            />
           </div>
           {page < totalPages && (
             <button onClick={handleNext} className={`${styles.navButton} ${styles.right}`}>

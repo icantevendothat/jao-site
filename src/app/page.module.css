@@ -20,7 +20,6 @@
     justify-content: center; 
     align-items: flex-start;
     padding-top: 5vh;
-    background-color: #1f0404;
     width: auto;
     background-attachment: fixed;
     position: relative;
@@ -40,9 +39,11 @@
 }
 
 .pageImage {
-    width: 120vh;
-    height: auto;
-    object-fit: cover;
+    /* Enforce a consistent height and aspect ratio to give the illusion of a book */
+    height: 80vh; /* Set a fixed height relative to the viewport */
+    width: auto; 
+    aspect-ratio: 1.6; /* Set a specific aspect ratio (e.g., 16:10 or 8:5) */
+    object-fit: contain; /* Changed from cover to contain to ensure the entire image is visible within the fixed aspect-ratio box */
     clip-path: inset(.8px);
 }
 
