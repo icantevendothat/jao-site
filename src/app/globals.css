@@ -11,8 +11,7 @@
 }
 
 body {
-  /* Changed background image to jao-bg.png */
-  background: url('/public/jao-bg.png') no-repeat center center fixed;
+  background: url('/jao-bg.png') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
