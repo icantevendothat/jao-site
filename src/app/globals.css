@@ -10,13 +10,18 @@
   }
 }
 
+@import url('https://use.typekit.net/bic7mgl.css');
+
+
 body {
   background: url('/jao-bg.png') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  font-family:'Times New Roman', Times, serif;
+  font-family: "big-caslon-fb", serif;
+  font-weight: 400;
+  font-style: italic;
   scrollbar-width: none;
   -ms-overflow-style: none;
   overflow: hidden;

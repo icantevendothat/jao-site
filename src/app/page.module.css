@@ -1,3 +1,4 @@
+
 .loadingScreen {
     position: fixed;
     top: 0;
@@ -102,27 +103,82 @@
     right: 0px;
 }
 
+/* Add these styles to your page.module.css */
+
+.infoPanel {
+    /* Position the panel fixed in the bottom left */
+    position: absolute;
+    bottom: 20px; /* Adjust as needed for spacing from the bottom */
+    left: 40px;  /* Adjust as needed for spacing from the left */
+    
+    /* Ensure the text is left-aligned */
+    text-align: left;
+    
+    /* Give it a high z-index to sit on top of the image */
+    z-index: 10;
+    
+    /* Adjust width if necessary, but auto should work */
+    width: auto; 
+  }
+  
+  .infoHeading1 {
+    /* Style for H1 (Justin O'Leary) */
+    font-size: 2em; /* Example size */
+    color: white; /* Example color, adjust based on your design */
+    margin-bottom: 5px; /* Space between name and projects */
+    font-weight: bold;
+  }
+  
+  .infoHeading2 {
+    font-size: 1em; 
+    color: white; 
+    margin: 2px 0; 
+    font-weight: normal;
+    cursor: pointer;
+}
+
+  .selected {
+    /* Applies the underline effect */
+    text-decoration: underline;
+    
+    /* Optional: Makes the selected text stand out a bit more */
+    font-weight: bold !important; 
+}
+
+
+
 @media (orientation: portrait) {
-    .container {
-        position: relative;
-        background-image: none;
-        background-color: white;
-        min-height: 100vh; 
-        display: flex; 
-        justify-content: center !important;
-        align-items: center !important;
-    }
-
-    .pageContainer, .navButton, .navPanel {
-        display: none;
-    }
-
-    .rotateMessage {
-        display: block;
+    .infoPanel {
+        /* Reposition the info panel from fixed bottom-left to standard document flow, 
+           or remove fixed positioning for easier layout on small screens */
+        position: static; 
+        left: auto;
+        bottom: auto;
+        padding: 20px; /* Add padding for breathing room */
+        width: 90%;
+        margin: 0 auto;
+        text-align: center; /* Center the text container */
+      }
+    
+      .infoHeading1 {
+        font-size: 1.5em; /* Make the name smaller */
+        margin-bottom: 10px;
+      }
+    
+      .infoHeading2 {
+        font-size: 0.9em; /* Make the project titles smaller */
+        margin: 3px 0;
+      }
+      
+      /* 2. Center the "ROTATE SCREEN" message */
+      .rotateMessage {
+        /* Override any default positioning to ensure centering */
+        display: flex;
+        justify-content: center; /* Horizontally center */
+        align-items: center;    /* Vertically center */
+        height: 100vh;          /* Take up the full viewport height */
         text-align: center;
-        color: red;
-        font-family: 'Times New Roman', Times, serif;
-        font-size: 24px;
-        font-weight: bold;
-    }
+        padding: 20px;
+        font-size: 1.2em;
+      }
 }
