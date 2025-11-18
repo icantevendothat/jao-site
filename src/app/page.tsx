@@ -32,8 +32,8 @@ export default function Home() {
     };
   }, []);
 
-  const totalPages = 27; // Changed from 26 to 27
-  const navPages = [1, 7, 13, 19, 27]; // Updated last navigation page
+  const totalPages = 27; 
+  const navPages = [1, 7, 13, 19, 27]; 
 
   const handleNext = () => {
     if (page < totalPages) {
@@ -51,7 +51,7 @@ export default function Home() {
     setPage(pageNumber);
   };
 
-  const pageImage = `/Page${page}.png`;
+  const pageImage = `/${page}.png`;
 
   return (
     <>
