@@ -66,7 +66,7 @@ export default function Home() {
             </button>
           )}
           <div className={styles.pageContainer}>
-            {/* The pageImage class in CSS will handle the uniform size and object-fit */}
+            {}
             <Image 
               src={pageImage} 
               alt={`Page ${page}`} 

@@ -39,11 +39,10 @@
 }
 
 .pageImage {
-    /* Enforce a consistent height and aspect ratio to give the illusion of a book */
-    height: 80vh; /* Set a fixed height relative to the viewport */
+    height: 80vh;
     width: auto; 
-    aspect-ratio: 1.6; /* Set a specific aspect ratio (e.g., 16:10 or 8:5) */
-    object-fit: contain; /* Changed from cover to contain to ensure the entire image is visible within the fixed aspect-ratio box */
+    aspect-ratio: 1.6; 
+    object-fit: contain;
     clip-path: inset(.8px);
 }
 
@@ -57,7 +56,6 @@
     background-image: url('/nav.png');
     background-size: contain;
     background-repeat: no-repeat;
-    /* background-position: top; */
     display: flex;
     flex-direction: column;
     justify-content: space-around;
