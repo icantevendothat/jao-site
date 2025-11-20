@@ -119,30 +119,34 @@
     
     /* Adjust width if necessary, but auto should work */
     width: auto; 
-  }
+}
   
-  .infoHeading1 {
+.infoHeading1 {
     /* Style for H1 (Justin O'Leary) */
     font-size: 2em; /* Example size */
     color: white; /* Example color, adjust based on your design */
     margin-bottom: 5px; /* Space between name and projects */
     font-weight: bold;
-  }
+}
   
-  .infoHeading2 {
+.infoHeading2 {
     font-size: 1em; 
     color: white; 
     margin: 2px 0; 
     font-weight: normal;
     cursor: pointer;
+    /* 1. ADD: Ensures the blur effect transitions smoothly */
+    transition: filter 0.4s ease-out, opacity 0.4s ease-out; 
 }
 
-  .selected {
-    /* Applies the underline effect */
-    text-decoration: underline;
-    
-    /* Optional: Makes the selected text stand out a bit more */
-    font-weight: bold !important; 
+.infoHeading2:hover {
+    color: red;
+}
+
+.selected {
+    filter: blur(2px); 
+    opacity: 0.6;
+
 }
 
 

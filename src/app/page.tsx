@@ -72,7 +72,7 @@ export default function Home() {
     setPage(pageNumber);
   };
 
-  const pageImage = `/${page}.png`;
+  const pageImage = `/${page}.webp`;
 
   return (
     <>
