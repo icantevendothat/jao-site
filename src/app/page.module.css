@@ -166,12 +166,12 @@
     
       .infoHeading1 {
         font-size: 1.5em; /* Make the name smaller */
-        margin-bottom: 10px;
+        margin-bottom: 2px;
       }
     
       .infoHeading2 {
         font-size: 0.9em; /* Make the project titles smaller */
-        margin: 3px 0;
+        margin: 1px 0;
       }
       
       /* 2. Center the "ROTATE SCREEN" message */

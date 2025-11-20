@@ -72,6 +72,10 @@ export default function Home() {
     setPage(pageNumber);
   };
 
+  const jumpToCover = () => {
+    setPage(1);
+  };
+
   const pageImage = `/${page}.webp`;
 
   return (
@@ -114,7 +118,9 @@ export default function Home() {
 
           {/* New Project Info Panel */}
           <div className={styles.infoPanel}>
-            <h1 className={styles.infoHeading1}>JUSTIN O&apos;LEARY</h1>
+          <h1 className={styles.infoHeading1} onClick={jumpToCover}>
+            JUSTIN O&apos;LEARY
+          </h1>
             
             {/* Map over the projectNav array to create clickable H2s */}
             {projectNav.map((project, index) => (
