@@ -5,13 +5,30 @@ import Image from 'next/image';
 import styles from './page.module.css';
 import './globals.css';
 
+// --- CONSTANTS ---
+const GRAND_NATIONAL_START_PAGE = 17;
+const CORRECT_PASSWORD = 'butt';
+
 export default function Home() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [isPortrait, setIsPortrait] = useState(false);
+  
+  // --- NEW AUTHENTICATION STATES ---
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [authMessage, setAuthMessage] = useState('');
+  // ------------------------------------
 
   useEffect(() => {
+    // Check local storage for session authentication on mount
+    const savedAuth = localStorage.getItem('grandNationalAuth');
+    if (savedAuth === 'true') {
+      setIsAuthenticated(true);
+    }
+    
+    // Original loading and orientation logic
     const handleLoad = () => {
       setFadeOut(true);
       setTimeout(() => setLoading(false), 1000);
@@ -35,25 +52,29 @@ export default function Home() {
   const totalPages = 27; 
   
   // Define project ranges: Start page and the page before the next project begins.
-  // The 'rangeEnd' is the last page of that project's section.
   const projectNav = [
-    // Project 1: Pages 8-13
     { title: "TELFAR - 20th ANNIVERSARY", page: 8, rangeEnd: 13 },
-    // Project 2: Pages 14-16
     { title: "GRACE LING", page: 14, rangeEnd: 16 },
-    // Project 3: Pages 17-20
-    { title: "GRAND NATIONAL TOUR", page: 17, rangeEnd: 20 },
-    // Project 4: Pages 21-25
-    { title: "TELFAR - DESIGN DEVELOPMENT", page: 21, rangeEnd: 25 },
-    // Project 5: Pages 26-27 (Assumes page 27 is the last page of this project/site)
+    // Project 3: Pages 17-20 (Requires password)
+    { title: "GRAND NATIONAL TOUR", page: GRAND_NATIONAL_START_PAGE, rangeEnd: 20 }, 
+    { title: "TELFAR - DESIGN DEVELOPMENT", page: 21, rangeEnd: 25 }, 
     { title: "STRAY RATS", page: 26, rangeEnd: totalPages }, 
   ];
   
   const navPages = projectNav.map(p => p.page); 
 
+  const verticalImagePages = [21, 22, 23, 24, 25]; 
+  const isVerticalLayout = verticalImagePages.includes(page);
+  
+  // --- NEW: Check if the current page is part of the protected project ---
+  const isGrandNationalPage = page >= GRAND_NATIONAL_START_PAGE && page <= 20;
+  
+  // Determine if the content should be blurred (i.e., protected page and not authenticated)
+  const isContentBlurred = isGrandNationalPage && !isAuthenticated;
+  // -----------------------------------------------------------------------
+
   // Function to determine if the current page falls within a project's range
   const isProjectActive = (startPage: number, endPage: number) => {
-    // Also consider pages before the first project (1-7) as inactive for all projects
     if (page < projectNav[0].page && startPage === projectNav[0].page) {
         return false;
     }
@@ -75,6 +96,22 @@ export default function Home() {
   const jumpToCover = () => {
     setPage(1);
   };
+  
+  // --- NEW AUTHENTICATION HANDLER ---
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordInput === CORRECT_PASSWORD) {
+      setIsAuthenticated(true);
+      setAuthMessage('ACCESS GRANTED');
+      // Set local storage to maintain auth for the session
+      localStorage.setItem('grandNationalAuth', 'true'); 
+    } else {
+      setAuthMessage('PASSWORD INCORRECT. All images in this section are blurred.');
+      setIsAuthenticated(false);
+      localStorage.removeItem('grandNationalAuth');
+    }
+  };
+  // -----------------------------------
 
   const pageImage = `/${page}.webp`;
 
@@ -84,45 +121,59 @@ export default function Home() {
         <div className={`${styles.loadingScreen} ${fadeOut ? styles.fadeOut : ''}`}></div>
       )}
       {!isPortrait ? (
-        <div className={styles.container}>
-          {/* Always display the left navigation button */}
-          <button onClick={handlePrevious} className={`${styles.navButton} ${styles.left}`}>
-            &lt;
-          </button>
+        <div className={`${styles.container} ${isVerticalLayout ? styles.verticalLayout : ''}`}>
+          
+          {/* Top-Third Heading */}
+          <div className={styles.infoPanelTop}>
+            <h1 className={styles.infoHeading1Top} onClick={jumpToCover}>
+                JUSTIN O&apos;LEARY
+            </h1>
+          </div>
+          
+          {/* Stacked Navigation Buttons (Fixed) */}
+          <div className={styles.navButtonStack}>
+              <button onClick={handlePrevious} className={styles.navButton}>
+                  &lt;
+              </button>
+              <button onClick={handleNext} className={styles.navButton}>
+                  &gt;
+              </button>
+          </div>
 
-          <div className={styles.pageContainer}>
+          {/* The image container, now conditionally blurred */}
+          <div className={`${styles.pageContainer} ${isVerticalLayout ? styles.verticalPageContainer : ''}`}>
             <Image 
               src={pageImage} 
               alt={`Page ${page}`} 
-              width={1200} 
-              height={750} 
-              className={styles.pageImage} 
+              width={1600} 
+              height={1600} 
+              className={`${styles.pageImage} ${isContentBlurred ? styles.blurredImage : ''} ${isVerticalLayout ? styles.verticalPageImage : ''}`}
               priority 
             />
           </div>
           
-          {/* Always display the right navigation button */}
-          <button onClick={handleNext} className={`${styles.navButton} ${styles.right}`}>
-            &gt;
-          </button>
+          {/* Password Input Box (Shown only on the Grand National cover page) */}
+          {page === GRAND_NATIONAL_START_PAGE && !isAuthenticated && (
+            <div className={styles.passwordOverlay}>
+              <form onSubmit={handlePasswordSubmit} className={styles.passwordForm}>
+                <p className={styles.authMessage}>{authMessage || 'PASSWORD REQUIRED TO VIEW PROJECT.'}</p>
+                <input
+                  type="password"
+                  value={passwordInput}
+                  onChange={(e) => setPasswordInput(e.target.value)}
+                  placeholder="Enter Password"
+                  className={styles.passwordInput}
+                  autoFocus
+                />
+                <button type="submit" className={styles.passwordSubmitButton}>
+                  SUBMIT
+                </button>
+              </form>
+            </div>
+          )}
 
-          <div className={styles.navPanel}>
-            {navPages.map((pageNumber, index) => (
-              <div 
-                key={index} 
-                className={styles.navLink} 
-                onClick={() => jumpToPage(pageNumber)}>
-              </div>
-            ))}
-          </div>
-
-          {/* New Project Info Panel */}
-          <div className={styles.infoPanel}>
-          <h1 className={styles.infoHeading1} onClick={jumpToCover}>
-            JUSTIN O&apos;LEARY
-          </h1>
-            
-            {/* Map over the projectNav array to create clickable H2s */}
+          {/* Menu Panel (Fixed) */}
+          <div className={styles.infoPanelBottom}>
             {projectNav.map((project, index) => (
               <h2 
                 key={index} 
