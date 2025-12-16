@@ -49,21 +49,20 @@ export default function Home() {
     };
   }, []);
 
-  const totalPages = 27; 
+  const totalPages = 35; 
   
-  // Define project ranges: Start page and the page before the next project begins.
   const projectNav = [
     { title: "TELFAR - 20th ANNIVERSARY", page: 8, rangeEnd: 13 },
     { title: "GRACE LING", page: 14, rangeEnd: 16 },
-    // Project 3: Pages 17-20 (Requires password)
     { title: "GRAND NATIONAL TOUR", page: GRAND_NATIONAL_START_PAGE, rangeEnd: 20 }, 
-    { title: "TELFAR - DESIGN DEVELOPMENT", page: 21, rangeEnd: 25 }, 
-    { title: "STRAY RATS", page: 26, rangeEnd: totalPages }, 
+    { title: "TELFAR - DESIGN DEVELOPMENT", page: 21, rangeEnd: 33 }, 
+    { title: "STRAY RATS", page: 34, rangeEnd: totalPages }, 
   ];
   
   const navPages = projectNav.map(p => p.page); 
 
-  const verticalImagePages = [21, 22, 23, 24, 25]; 
+  // 4. UPDATE VERTICAL LAYOUT ARRAY: Added pages 26 through 33
+  const verticalImagePages = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]; 
   const isVerticalLayout = verticalImagePages.includes(page);
   
   // --- NEW: Check if the current page is part of the protected project ---
