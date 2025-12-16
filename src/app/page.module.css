@@ -186,8 +186,7 @@
 
 .navButtonStack {
     position: absolute; 
-    /* Anchored to the bottom-left, but pushed higher than the infoPanelBottom */
-    bottom: 180px; /* Adjust this value to change the gap between buttons and text */
+    bottom: 165px; 
     left: 40px;
     display: flex;
     flex-direction: row; /* Side by side */
@@ -202,7 +201,7 @@
     padding: 2px 10px; 
     color: black;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 7px;
     font-family: system-ui; 
     transition: all 0.1s;
 }
