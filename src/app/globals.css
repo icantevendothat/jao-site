@@ -14,7 +14,7 @@
 
 
 body {
-  background: url('/test.png') no-repeat center center fixed;
+  background: transparent;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
