@@ -6,7 +6,6 @@ import { createClient } from 'next-sanity';
 import styles from './page.module.css';
 import './globals.css';
 
-// 1. Initialize Sanity Client using Environment Variables
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID, 
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
@@ -14,28 +13,32 @@ const client = createClient({
   useCdn: false,
 });
 
-// 2. Define the GROQ Query
 const PROJECT_QUERY = `*[_type == "project"] | order(order asc) {
   title,
-  "imageUrl": mainImage.asset->url,
+  "images": images[].asset->url,
   isProtected,
   "id": _id
 }`;
 
-// 3. Define the TypeScript Interface for your data
 interface Project {
   id: string;
   title: string;
-  imageUrl: string;
+  images: string[];
   isProtected?: boolean;
 }
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [projectIndex, setProjectIndex] = useState(0);
+  const [imageIndex, setImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [isPortrait, setIsPortrait] = useState(false);
+  
+  // Password State
+  const [passwordInput, setPasswordInput] = useState('');
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -45,56 +48,76 @@ export default function Home() {
       } catch (error) {
         console.error("Failed to fetch projects:", error);
       } finally {
-        // Trigger the fade out and loading screen removal
         setFadeOut(true);
         setTimeout(() => setLoading(false), 1000);
       }
     }
-    
     fetchProjects();
 
     const handleOrientationChange = () => {
       setIsPortrait(window.matchMedia("(orientation: portrait)").matches);
     };
-
     handleOrientationChange(); 
     window.addEventListener('resize', handleOrientationChange);
     return () => window.removeEventListener('resize', handleOrientationChange);
   }, []);
 
-  // Navigation Logic
+  const currentProject = projects[projectIndex];
+  const needsPassword = currentProject?.isProtected && !isAuthorized;
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordInput === "gnx2026") { 
+      setIsAuthorized(true);
+      setShowError(false);
+    } else {
+      setShowError(true);
+    }
+  };
+
   const handleNext = () => {
-    if (projects.length === 0) return;
-    setActiveIndex((prev) => (prev + 1) % projects.length);
+    if (needsPassword) return;
+    if (imageIndex < currentProject.images.length - 1) {
+      setImageIndex(imageIndex + 1);
+    } else {
+      const nextIdx = (projectIndex + 1) % projects.length;
+      setProjectIndex(nextIdx);
+      setImageIndex(0);
+      setIsAuthorized(false); // Relock when moving to a new project
+    }
   };
 
   const handlePrevious = () => {
-    if (projects.length === 0) return;
-    setActiveIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
+    if (imageIndex > 0) {
+      setImageIndex(imageIndex - 1);
+    } else {
+      const prevIdx = projectIndex === 0 ? projects.length - 1 : projectIndex - 1;
+      setProjectIndex(prevIdx);
+      setImageIndex(projects[prevIdx].images.length - 1);
+      setIsAuthorized(false); // Relock
+    }
   };
 
-  const jumpToCover = () => setActiveIndex(0);
-
-  // Safety check for dynamic background
-  const currentProject = projects[activeIndex];
-  const currentBg = currentProject?.imageUrl || "/test.png";
+  const jumpToCover = () => {
+    setProjectIndex(0);
+    setImageIndex(0);
+    setIsAuthorized(false);
+  };
 
   return (
     <>
-      {/* Loading Screen logic from your module.css */}
       {(loading || projects.length === 0) && (
         <div className={`${styles.loadingScreen} ${fadeOut ? styles.fadeOut : ''}`}></div>
       )}
 
-      {/* Dynamic Background Image from Sanity */}
       <div className={styles.fullscreenBg}>
-        {projects.length > 0 && (
+        {projects.length > 0 && !needsPassword && (
           <Image 
-            src={currentBg} 
-            alt={currentProject?.title || "Background"} 
-            fill
-            priority 
+            src={currentProject?.images?.[imageIndex] || "/test.png"} 
+            alt={currentProject?.title} 
+            fill priority 
             className={styles.bgImage}
+            key={currentProject?.images?.[imageIndex]}
           />
         )}
       </div>
@@ -103,10 +126,28 @@ export default function Home() {
         <div className={styles.container}>
           
           <div className={styles.infoPanelTop}>
-            <h1 className={styles.infoHeading1Top} onClick={jumpToCover}>
+            <h1 className={`${styles.infoHeading1Top} ${projectIndex === 0 ? styles.selected : ''}`} onClick={jumpToCover}>
                 JUSTIN O&apos;LEARY
             </h1>
           </div>
+
+          {/* Password Overlay */}
+          {needsPassword && (
+            <div className={styles.passwordOverlay}>
+              <form onSubmit={handlePasswordSubmit} className={styles.passwordForm}>
+                <input 
+                  type="password" 
+                  placeholder="ENTER PASSCODE" 
+                  className={styles.passwordInput}
+                  value={passwordInput}
+                  onChange={(e) => setPasswordInput(e.target.value)}
+                  autoFocus
+                />
+                <button type="submit" className={styles.passwordSubmitButton}>SUBMIT</button>
+                {showError && <p className={styles.authMessage}>INCORRECT PASSCODE</p>}
+              </form>
+            </div>
+          )}
           
           <div className={styles.navButtonStack}>
               <button onClick={handlePrevious} className={styles.navButton}>&lt;</button>
@@ -114,11 +155,15 @@ export default function Home() {
           </div>
 
           <div className={styles.infoPanelBottom}>
-            {projects.map((project, index) => (
+            {projects.slice(1).map((project, index) => (
               <h2 
                 key={project.id} 
-                className={`${styles.infoHeading2} ${activeIndex === index ? styles.selected : ''}`}
-                onClick={() => setActiveIndex(index)}
+                className={`${styles.infoHeading2} ${projectIndex === index + 1 ? styles.selected : ''}`}
+                onClick={() => {
+                  setProjectIndex(index + 1);
+                  setImageIndex(0);
+                  setIsAuthorized(false);
+                }}
               >
                 {project.title}
               </h2>
