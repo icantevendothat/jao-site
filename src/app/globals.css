@@ -18,7 +18,7 @@ body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
+  background-size: contain;
   font-family: "big-caslon-fb", serif;
   font-weight: 400;
   font-style: italic;
