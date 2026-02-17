@@ -34,6 +34,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [isPortrait, setIsPortrait] = useState(false);
+
+  const [activeSrc, setActiveSrc] = useState<string>("");
+  const [isChanging, setIsChanging] = useState(false);
   
   // Password State
   const [passwordInput, setPasswordInput] = useState('');
@@ -62,9 +65,17 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleOrientationChange);
   }, []);
 
+  useEffect(() => {
+    const newSrc = projects[projectIndex]?.images?.[imageIndex];
+    if (newSrc && newSrc !== activeSrc) {
+      setIsChanging(true); // This triggers the CSS 'fading' state
+      setActiveSrc(newSrc);
+    }
+  }, [projectIndex, imageIndex, projects, activeSrc]);
+
   const currentProject = projects[projectIndex];
   const needsPassword = currentProject?.isProtected && !isAuthorized;
-
+  
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (passwordInput === "gnx2026") { 

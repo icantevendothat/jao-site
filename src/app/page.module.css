@@ -22,12 +22,22 @@
     left: 0;
     width: 100vw;
     height: 100vh;
+    inset: 0;
+    background-color: #000;
     z-index: 1; /* Behind navigation */
 }
-
+  
 .bgImage {
-    object-fit: cover; /* This makes it take up the whole viewport */
-    object-position: center;
+    object-fit: cover;
+    transition: opacity 0.6s ease-in-out; 
+}
+
+.fading {
+    opacity: 0;
+}
+  
+.visible {
+    opacity: 1;
 }
 
 .container {
@@ -89,7 +99,7 @@
 
 .navButtonStack {
     position: fixed; 
-    bottom: 40px; /* Aligns with your infoPanelBottom height */
+    bottom: 20px; /* Aligns with your infoPanelBottom height */
     left: 0;
     width: 100%;
     display: flex;
@@ -119,8 +129,6 @@
     border: 2px inset ButtonBorder; 
 }
 
-
-
 .infoPanelTop {
     /* Remains in the top left area, anchored to the screen edge */
     grid-area: 1 / 1 / 2 / 2; 
@@ -146,7 +154,7 @@
 .infoPanelBottom {
     grid-area: 3 / 1 / 4 / 2; 
     position: absolute;
-    bottom: 40px;
+    bottom: 80px;
     left: 40px;
     text-align: left;
     z-index: 10;
@@ -174,10 +182,6 @@
     opacity: 0.6;
     color: white; 
 }
-
-/* -------------------------------------- */
-/* --- Mobile/Portrait Message --- */
-/* -------------------------------------- */
 
 @media (orientation: portrait) {
     .container { 

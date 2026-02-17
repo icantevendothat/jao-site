@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://use.typekit.net/bic7mgl.css');
 
 :root {
   --foreground: white;
@@ -9,9 +10,6 @@
     --foreground: white;
   }
 }
-
-@import url('https://use.typekit.net/bic7mgl.css');
-
 
 body {
   background: transparent;
