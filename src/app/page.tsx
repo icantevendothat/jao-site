@@ -152,7 +152,7 @@ export default function Home() {
           Your browser does not support the video tag.
         </video>
         <h1 className={styles.mobileText}>
-          HAVE SOME RESPECT. <br />
+          HAVE SOME DECORUM. <br />
           PLEASE VIEW THIS PORTFOLIO ON DESKTOP
         </h1>
       </div>
