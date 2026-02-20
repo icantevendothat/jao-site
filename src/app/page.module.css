@@ -192,8 +192,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10000;
-    overflow: hidden; /* Prevents video overflow */
+    overflow: hidden; 
     background-color: #000;
     z-index: 0;
 }
@@ -213,11 +212,12 @@
     position: relative; /* Ensures text stays above the video */
     color: #ff0000; 
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
     padding: 2rem;
+    padding-bottom: 25vh;
     line-height: 1.4;
     z-index: 2;
   }
