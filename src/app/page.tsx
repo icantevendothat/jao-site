@@ -138,10 +138,19 @@ export default function Home() {
     setIsAuthorized(false);
   };
 
-  // MOBILE VIEW: Red text on jaosite.gif background
   if (isPortrait) {
     return (
       <div className={styles.mobileBlocker}>
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          className={styles.mobileVideo}
+        >
+          <source src="/media/jaosite.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         <h1 className={styles.mobileText}>
           HAVE SOME RESPECT. <br />
           PLEASE VIEW THIS PORTFOLIO ON DESKTOP

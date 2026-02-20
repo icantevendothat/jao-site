@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   description: "Justin O'Leary",
 };
 
+export const viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover', // This is the magic line for notches
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
