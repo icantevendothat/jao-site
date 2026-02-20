@@ -148,12 +148,13 @@ export default function Home() {
           playsInline 
           className={styles.mobileVideo}
         >
-          <source src="/media/jaosite.mp4" type="video/mp4" />
+          <source src="media/jaosite.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <h1 className={styles.mobileText}>
-          HAVE SOME DECORUM. <br />
-          PLEASE VIEW THIS PORTFOLIO ON DESKTOP
+          THIS PORTFOLIO IS BEST 
+          <br></br>
+          VIEWED ON DESKTOP.
         </h1>
       </div>
     );
